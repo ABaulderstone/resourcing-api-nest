@@ -10,6 +10,7 @@ import {
 import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
+import { Job } from './entities/job.entity';
 
 @Controller('jobs')
 export class JobsController {
@@ -21,13 +22,15 @@ export class JobsController {
   }
 
   @Get()
-  findAll() {
-    return this.jobsService.findAll();
+  async findAll(): Promise<Job[]> {
+    return await this.jobsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.jobsService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<Job | null> {
+    const job = await this.jobsService.findOne(+id);
+    console.log(job);
+    return job;
   }
 
   @Patch(':id')
