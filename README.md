@@ -1,73 +1,57 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## Summary
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Your task is to build a Resourcing API using the Java Spring Boot framework, that allows consumers to assign temps to jobs.
+Endpoints
+`POST /jobs` - Creates a job
+`PATCH /jobs/{id}` - Updates job, endpoint should be used to assign temps to jobs
+`GET /jobs` - Fetch all jobs
+`GET /jobs?assigned={true|false}` - Filter by whether a job is assigned to a temp or not
+`GET /jobs/{id}` - (id, name, tempId, startDate, endDate)
+`POST /temps` - Create a temp
+`GET /temps` - List all temps
+`GET /temps?jobId={jobId}` - List temps that are available for a job based on the jobs date range
+`GET /temps/{id}` - get temp by id (should also display jobs they’ve been assigned to)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Example Payloads
 
-## Description
+```
+// GET /jobs/{id}
+{
+id: ...,
+name: ...,
+startDate: ...,
+endDate: ...,
+temp: {
+id: ...,
+firstName: ...,
+lastName: ...,
+} // temp can also be null if a temp hasn't been assigned to the job
+}
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+// GET /temps/{id}
+{
+id: ...,
+firstName: ...,
+lastName: ...,
+jobs: [{
+id: ...,
+name: ...,
+startDate: ...,
+endDate: ...,
+}, ...] // can be empty if temp hasn't been assigned to jobs
+}
 ```
 
-## Running the app
+## Assumptions
 
-```bash
-# development
-$ npm run start
+- Temps can only have one job at a time (can’t be doing 2 jobs on the same date)
+- Temps can have many jobs, and job can have 1 temp assigned
+- Should be able to assign existing temps to jobs via POST /jobs & PATCH /jobs/{id}
+- You must use a relational database
 
-# watch mode
-$ npm run start:dev
+## Bonus
 
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- Temps should be able to manage other temps (will require an additional field)
+- When you request a temp record it should display the reports of that temp
+- Should be represented in the database as a nested set (research what nested sets are)
+- `GET /temps/tree` - should display the whole tree of temps

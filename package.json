@@ -25,9 +25,9 @@
   },
   "dependencies": {
     "@mikro-orm/core": "^5.5.1",
-    "@mikro-orm/migrations": "^5.5.2",
+    "@mikro-orm/migrations": "5.5.1",
     "@mikro-orm/mysql": "^5.5.1",
-    "@mikro-orm/nestjs": "^5.1.2",
+    "@mikro-orm/nestjs": "^5.1.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
@@ -76,5 +76,12 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./src/mikro-orm.config.ts",
+      "./dist/mikro-orm.config.js"
+    ]
   }
 }
