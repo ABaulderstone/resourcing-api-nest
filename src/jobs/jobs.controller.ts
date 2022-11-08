@@ -29,7 +29,6 @@ export class JobsController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Job | null> {
     const job = await this.jobsService.findOne(+id);
-    console.log(job);
     return job;
   }
 

@@ -34,3 +34,24 @@ export const PresentOrFuture = (validationOptions?: ValidationOptions) => {
     });
   };
 };
+
+export const IsAfter = (
+  property: string,
+  validationOptions?: ValidationOptions,
+) => {
+  return (object: Object, propertyName: string) => {
+    registerDecorator({
+      target: object.constructor,
+      propertyName,
+      options: validationOptions,
+      constraints: [property],
+      validator: {
+        validate(value: string, args: ValidationArguments) {
+          const [relatedPropertyName] = args.constraints;
+          const relatedValue = (args.object as any)[relatedPropertyName];
+          return new Date(value).getTime() >= new Date(relatedValue).getTime();
+        },
+      },
+    });
+  };
+};
