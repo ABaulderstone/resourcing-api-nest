@@ -27,8 +27,12 @@ export class JobsService {
     return await this.jobRepository.findOne({ id });
   }
 
-  update(id: number, updateJobDto: UpdateJobDto) {
-    return `This action updates a #${id} job`;
+  async update(id: number, data: UpdateJobDto) {
+    const job = await this.findOne(id);
+    const updatedPlain = { ...job, ...data };
+    const updatedJob = plainToClass(Job, updatedPlain);
+
+    return await this.jobRepository.upsert(updatedJob);
   }
 
   remove(id: number) {
