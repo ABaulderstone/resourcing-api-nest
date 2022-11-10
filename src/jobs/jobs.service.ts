@@ -35,7 +35,8 @@ export class JobsService {
     return await this.jobRepository.upsert(updatedJob);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} job`;
+  async remove(id: number) {
+    const jobRef = this.jobRepository.getReference(id);
+    return await this.jobRepository.removeAndFlush(jobRef);
   }
 }
