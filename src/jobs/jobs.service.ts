@@ -19,7 +19,7 @@ export class JobsService {
     return newJob;
   }
 
-  async findAll() {
+  async findAll(): Promise<Job[]> {
     return await this.jobRepository.findAll();
   }
 
@@ -27,16 +27,13 @@ export class JobsService {
     return await this.jobRepository.findOne({ id });
   }
 
-  async update(id: number, data: UpdateJobDto) {
+  async update(id: number, data: UpdateJobDto): Promise<Job | null> {
     const job = await this.findOne(id);
-    console.log(job);
-    const updatedPlain = { ...job, ...data };
-    const updatedJob = plainToClass(Job, updatedPlain);
-    console.log(updatedJob);
+    const updatedJob = plainToClass(Job, { ...job, ...data });
     return await this.jobRepository.upsert(updatedJob);
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     const jobRef = this.jobRepository.getReference(id);
     return await this.jobRepository.removeAndFlush(jobRef);
   }
