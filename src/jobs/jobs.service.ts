@@ -29,9 +29,10 @@ export class JobsService {
 
   async update(id: number, data: UpdateJobDto) {
     const job = await this.findOne(id);
+    console.log(job);
     const updatedPlain = { ...job, ...data };
     const updatedJob = plainToClass(Job, updatedPlain);
-
+    console.log(updatedJob);
     return await this.jobRepository.upsert(updatedJob);
   }
 
