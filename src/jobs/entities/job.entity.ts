@@ -1,19 +1,13 @@
-import {
-  BeforeCreate,
-  BeforeUpdate,
-  Entity,
-  PrimaryKey,
-  Property,
-} from '@mikro-orm/core';
+import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { RemoveExcessWhiteSpace } from 'src/shared/transformations/decorators';
 
-import { Transform } from 'class-transformer';
 @Entity({ tableName: 'jobs' })
 export class Job {
   @PrimaryKey()
   id: number;
 
   @Property()
-  @Transform(({ value }) => value.trim().replace(/\s\s+/g, ' '))
+  @RemoveExcessWhiteSpace()
   name: string;
 
   @Property()
