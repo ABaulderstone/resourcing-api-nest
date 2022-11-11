@@ -10,7 +10,7 @@ const config: Options = {
   password: '',
   dbName: process.env.DB_NAME,
   entities: ['dist/**/*.entity.js'],
-  entitiesTs: ['src/**/*.entity.ts'],
+  // entitiesTs: ['src/**/*.entity.ts'],
   debug: true,
   loadStrategy: LoadStrategy.JOINED,
   migrations: {

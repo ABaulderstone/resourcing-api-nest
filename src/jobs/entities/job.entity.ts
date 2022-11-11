@@ -1,5 +1,5 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
-import { RemoveExcessWhiteSpace } from 'src/shared/transformations/decorators';
+import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Temp } from 'src/temps/entities/temp.entity';
 
 @Entity({ tableName: 'jobs' })
 export class Job {
@@ -7,7 +7,6 @@ export class Job {
   id: number;
 
   @Property()
-  @RemoveExcessWhiteSpace()
   name: string;
 
   @Property()
@@ -15,4 +14,7 @@ export class Job {
 
   @Property()
   endDate: Date;
+
+  @ManyToOne({ entity: () => Temp, nullable: true })
+  temp: Temp;
 }

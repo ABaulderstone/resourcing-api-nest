@@ -1,15 +1,16 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
-import { RemoveExcessWhiteSpace } from 'src/shared/transformations/decorators';
+import { Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Job } from 'src/jobs/entities/job.entity';
 @Entity({ tableName: 'temps' })
 export class Temp {
   @PrimaryKey()
   id: number;
 
   @Property()
-  @RemoveExcessWhiteSpace()
   firstName: string;
 
   @Property()
-  @RemoveExcessWhiteSpace()
   lastName: string;
+
+  @OneToMany(() => Job, (job) => job.temp)
+  jobs: Job[];
 }
