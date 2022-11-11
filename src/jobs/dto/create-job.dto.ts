@@ -1,4 +1,10 @@
-import { IsString, IsNotEmpty, IsDateString } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsDateString,
+  IsOptional,
+  Min,
+} from 'class-validator';
 import { IsAfter, PresentOrFuture } from 'src/shared/validations/decorators';
 
 export class CreateJobDto {
@@ -13,4 +19,8 @@ export class CreateJobDto {
   @IsDateString()
   @IsAfter('startDate', { message: 'End Date must be on or after Start Date' })
   endDate: string;
+
+  @IsOptional()
+  @Min(1)
+  tempId: number;
 }

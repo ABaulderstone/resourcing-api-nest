@@ -1,4 +1,10 @@
-import { Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import {
+  Cascade,
+  Entity,
+  OneToMany,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/core';
 import { Job } from 'src/jobs/entities/job.entity';
 @Entity({ tableName: 'temps' })
 export class Temp {
@@ -11,6 +17,6 @@ export class Temp {
   @Property()
   lastName: string;
 
-  @OneToMany(() => Job, (job) => job.temp)
+  @OneToMany(() => Job, (job) => job.temp, { cascade: [Cascade.ALL] })
   jobs: Job[];
 }

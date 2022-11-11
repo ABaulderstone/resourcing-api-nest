@@ -8,5 +8,6 @@ import { Temp } from './entities/temp.entity';
   imports: [MikroOrmModule.forFeature([Temp])],
   controllers: [TempsController],
   providers: [TempsService],
+  exports: [TempsService],
 })
 export class TempsModule {}
