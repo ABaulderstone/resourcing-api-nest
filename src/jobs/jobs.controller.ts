@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
@@ -22,7 +23,10 @@ export class JobsController {
   }
 
   @Get()
-  async findAll(): Promise<Job[]> {
+  async findAll(@Query('assigned') assigned: string): Promise<Job[]> {
+    // if(assigned) {
+    //   return await this.jobsService.findByAssigned(assigned)
+    // }
     return await this.jobsService.findAll();
   }
 
